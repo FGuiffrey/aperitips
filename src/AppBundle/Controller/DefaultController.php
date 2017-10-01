@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Event;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,9 +22,12 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request): Response
     {
-        // replace this example code with whatever you need
+        $em = $this->get('doctrine')->getManager();
+
+        $event = $em->getRepository(Event::class)->findNextEvent();
+
         return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
+            'event' => $event,
         ]);
     }
 

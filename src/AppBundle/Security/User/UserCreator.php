@@ -8,7 +8,6 @@ use Doctrine\Common\Persistence\ObjectManager;
 use LightSaml\Model\Protocol\Response;
 use LightSaml\SpBundle\Security\User\UserCreatorInterface;
 use LightSaml\SpBundle\Security\User\UsernameMapperInterface;
-use Stringy\Stringy;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -45,13 +44,11 @@ class UserCreator implements UserCreatorInterface
     {
         $username = $this->usernameMapper->getUsername($response);
 
-        if ($username !== null) {
-            $slug = Stringy::create(strtok($username, '@'))->slugify()->trim();
-
+        if (null !== $username) {
             $user = new User();
             $user->setUsername($username);
             $user->setEmail($username);
-            $user->setSlug($slug);
+            $user->setSlug(strtok($username, '@'));
 
             $role = $this->objectManager->getRepository(Role::class)->findOneBy(['role' => 'ROLE_USER']);
             if ($role instanceof Role) {

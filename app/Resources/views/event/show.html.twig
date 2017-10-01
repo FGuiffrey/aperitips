@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block mainContent %}
+    <h1>Apéritips du {{ event.scheduledAt | localizeddate('long', 'none') }}</h1>
+
+    <table>
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ event.id }}</td>
+        </tr>
+        <tr>
+            <th>Scheduledat</th>
+            <td>{% if event.scheduledAt %}{{ event.scheduledAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Createdat</th>
+            <td>{% if event.createdAt %}{{ event.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Updatedat</th>
+            <td>{% if event.updatedAt %}{{ event.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

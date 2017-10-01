@@ -29,6 +29,18 @@
                 <source>form.user.edit_error</source>
                 <target>Veuillez corriger vos erreurs.</target>
             </trans-unit>
+            <trans-unit id="form_event_register_submit">
+                <source>form.event.register_submit</source>
+                <target>Participer</target>
+            </trans-unit>
+            <trans-unit id="form_event_register_success">
+                <source>form.event.register_success</source>
+                <target>Votre participation à l'évènement a bien été enregistré.</target>
+            </trans-unit>
+            <trans-unit id="form_error">
+                <source>form.error</source>
+                <target>Veuillez corriger vos erreurs.</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
