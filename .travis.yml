@@ -1,4 +1,5 @@
 language: php
+
 sudo: false
 
 cache:
@@ -23,6 +24,7 @@ matrix:
     - php: nightly
 
 before_install:
+  - composer self-update
   - cp app/config/parameters.yml.travis app/config/parameters.yml
 
 install:
@@ -34,4 +36,6 @@ before_script:
   - vendor/bin/phpunit --version
 
 script:
+  - vendor/bin/phpcs -s --config-set ignore_warnings_on_exit 1
+  - vendor/bin/php-cs-fixer fix --diff --dry-run
   - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
