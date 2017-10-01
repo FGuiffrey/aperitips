@@ -14,7 +14,7 @@ Symfony 3 project to organise internal conferences.
 
 ## Installation
 
-### Install the project localy
+### Install the project locally
 
 * Create a **www** directory within your **home** directory
 
@@ -41,7 +41,7 @@ cd www && git clone git@github.com:EmakinaFR/aperitips.git
 This project use Sass. Sass is a Ruby dependency but if you're using a Mac, congratulations, Ruby comes pre-installed.
 If you're using something else you can check [sass install documentation](http://sass-lang.com/install).
 
-* Install Sass `gem instamm sass`
+* Install Sass `gem install sass`
 * Install Yarn by following the instructions [here](https://yarnpkg.com/en/docs/install)
 * Install Grunt globally `yarn global add grunt-cli`
 * Run `yarn` to install all dependencies of the project
