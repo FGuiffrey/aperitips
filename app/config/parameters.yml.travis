@@ -19,6 +19,6 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     # Okta
-    okta_idp:          ~
+    okta_idp:          travis
     okta_token:        ~
-    okta_domain:       ~
+    okta_domain:       https://travis.okta.com
