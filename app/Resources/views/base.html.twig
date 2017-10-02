@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
 
     {% block stylesheet %}
-        <link rel="stylesheet" href="{{ asset('assets/styles/reset.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/styles/main.css') }}">
     {% endblock %}
 
@@ -14,11 +13,7 @@
 </head>
 <body>
 {% block body %}
-    {% block push %}
-        <div id='push' class="push">
-            {% block pushContent %}{% endblock %}
-        </div>
-    {% endblock %}
+    {% block push %}{% endblock %}
 
     {% block header %}
         <header>
@@ -33,24 +28,40 @@
                 <nav id="nav" role="navigation">
                     <ul>
                         <li class="primary">
-                            <a href='#actus' title='Programme'>
+                            <a href="{{ path('homepage') }}#actus" title="Programme">
                                 Actus
                             </a>
                         </li>
                         <li class="primary">
-                            <a href='#prochains-sujets' title='Prochains sujets'>
+                            <a href="{{ path('homepage') }}#prochains-sujets" title="Prochains sujets">
                                 Prochains sujets
                             </a>
                         </li>
                         <li class="primary">
-                            <a href='#participants' title='Participant'>
+                            <a href="{{ path('homepage') }}#participants" title="Participant">
                                 Participant
                             </a>
                         </li>
                         <li class="primary">
-                            <a href='#archive' title='Archive'>
+                            <a href="{{ path('homepage') }}#archive" title="Archive">
                                 Archive
                             </a>
+                        </li>
+                        <li class="primary dropdown">
+                            <a href="#" data-dropdown="userDropdown">{{ app.user.username }}</a>
+                            <div id="userDropdown" class="dropdown-content">
+                                <ul class="dropdown-item">
+                                    <li>
+                                        <a href="{{ path('user_profil', {'slug': app.user.slug}) }}">Profil</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('user_settings') }}">Settings</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('logout') }}">Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </nav>

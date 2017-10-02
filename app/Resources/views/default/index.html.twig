@@ -1,24 +1,25 @@
 {% extends 'base.html.twig' %}
-{% from 'elements/macro.html.twig' import logo %}
 
-{% block pushContent %}
-    <div class="push-container">
-    <h2 class="primary">Apéritips</h2>
+{% from 'elements/macro.html.twig' import logo, flash %}
 
-        <p>{# Description/ Concept / ... #}</p>
+{% block push %}
+    <div id="push" class="push">
+        <div class="push-container">
+        <h2 class="primary">Apéritips</h2>
 
-        {{ logo() }}
+            <p>{# Description/ Concept / ... #}</p>
+
+            {{ logo() }}
+        </div>
     </div>
 {% endblock %}
 
-
-
 {% block mainContent %}
-    <section id='actus'>
+    <section id="actus">
         <article>
             <h2 class="primary">Actus</h2>
 
-            <p>Prochain Apéritips : <strong>{# Date et Heure #}</strong></p>
+            <p>Prochain Apéritips : <strong>{{ event.scheduledAt|localizeddate('long', 'none') }}</strong></p>
 
             <h3>Sujet</h3>
 
@@ -31,6 +32,15 @@
                     <span>{# Speaker(s) #}</span>
                 </article>
             </section>
+
+            {{ flash('success') }}
+
+            {% if not event.isRegistered(app.user) %}
+                <form action="{{ path('event_register', { 'id': event.id }) }}" method="post">
+                    <input type="hidden" name="_token" value="{{ csrf_token('event_registration') }}">
+                    <button type="submit">{{ 'form.event.register_submit'|trans({}, 'form') }}</button>
+                </form>
+            {% endif %}
 
         </article>
     </section>

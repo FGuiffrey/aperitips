@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class UserController extends Controller
 {
     /**
-     * @Route("/profil/{slug}", name="user_index", requirements={
+     * @Route("/profil/{slug}", name="user_profil", requirements={
      *     "slug": "[a-zA-Z0-9\-._=]+"
      * })
      * @Method("GET")
@@ -45,7 +45,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/profil/settings", name="user_account_settings")
+     * @Route("/settings", name="user_settings")
      * @Method({"GET", "POST"})
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -85,7 +85,7 @@ class UserController extends Controller
     private function createEditForm(User $user): Form
     {
         $form = $this->createForm(UserType::class, $user, [
-            'action' => $this->generateUrl('user_account_settings'),
+            'action' => $this->generateUrl('user_settings'),
             'method' => Request::METHOD_POST,
         ]);
 

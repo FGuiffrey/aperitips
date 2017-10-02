@@ -2,8 +2,11 @@
 
 namespace AppBundle\Entity\Auth;
 
+use AppBundle\Entity\Event;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Stringy\Stringy;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -99,10 +102,27 @@ class User implements UserInterface, \Serializable
     private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Auth\Role", inversedBy="users")
      * @ORM\JoinColumn(name="role_id", referencedColumnName="id")
      */
     private $roles;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Event", mappedBy="registered")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
+     */
+    private $attendedEvents;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Event", mappedBy="author")
+     */
+    private $createdEvents;
 
     /**
      * User constructor.
@@ -110,6 +130,8 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->roles = new ArrayCollection();
+        $this->attendedEvents = new ArrayCollection();
+        $this->createdEvents = new ArrayCollection();
     }
 
     /**
@@ -123,6 +145,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Set username.
+     *
      * @param string $username
      *
      * @return \AppBundle\Entity\Auth\User
@@ -135,6 +159,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Get username.
+     *
      * @return string
      */
     public function getUsername(): string
@@ -167,18 +193,22 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Set slug.
+     *
      * @param string $slug
      *
      * @return \AppBundle\Entity\Auth\User
      */
     public function setSlug(string $slug): User
     {
-        $this->slug = $slug;
+        $this->slug = Stringy::create($slug)->slugify()->trim();
 
         return $this;
     }
 
     /**
+     * Get slug.
+     *
      * @return string
      */
     public function getSlug(): string
@@ -235,6 +265,16 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Get fullname.
+     *
+     * @return null|string
+     */
+    public function getFullname(): ?string
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
+    /**
      * Set picturePath.
      *
      * @param null|string $picture
@@ -259,6 +299,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Set pictureFile.
+     *
      * @param null|\Symfony\Component\HttpFoundation\File\File $file
      *
      * @return \AppBundle\Entity\Auth\User
@@ -275,6 +317,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Get pictureFile.
+     *
      * @return null|\Symfony\Component\HttpFoundation\File\File
      */
     public function getPictureFile(): ?File
@@ -283,6 +327,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Set createdAt.
+     *
      * @ORM\PrePersist
      */
     public function setCreatedAt(): void
@@ -301,6 +347,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * Set updatedAt.
+     *
+     * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
     public function setUpdatedAt(): void
@@ -326,6 +375,26 @@ class User implements UserInterface, \Serializable
     public function getRoles(): array
     {
         return $this->roles->toArray();
+    }
+
+    /**
+     * Get attendedEvents.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAttendedEvents(): Collection
+    {
+        return $this->attendedEvents;
+    }
+
+    /**
+     * Get createdEvents.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCreatedEvents(): Collection
+    {
+        return $this->createdEvents;
     }
 
     /**
@@ -374,7 +443,7 @@ class User implements UserInterface, \Serializable
     public function addRole(Role $role): User
     {
         if (!$this->roles->contains($role)) {
-            $this->roles[] = $role;
+            $this->roles->add($role);
             $role->addUser($this);
         }
 
@@ -389,5 +458,32 @@ class User implements UserInterface, \Serializable
     public function removeRole(Role $role): void
     {
         $this->roles->removeElement($role);
+    }
+
+    /**
+     * Add event.
+     *
+     * @param \AppBundle\Entity\Event $event
+     *
+     * @return \AppBundle\Entity\Auth\User
+     */
+    public function addAttendedEvents(Event $event): User
+    {
+        if (!$this->attendedEvents->contains($event)) {
+            $this->attendedEvents->add($event);
+            $event->addRegistered($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove event.
+     *
+     * @param \AppBundle\Entity\Event $event
+     */
+    public function removeAttendedEvents(Event $event): void
+    {
+        $this->attendedEvents->removeElement($event);
     }
 }
