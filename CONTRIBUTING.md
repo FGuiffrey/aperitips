@@ -1,3 +1,5 @@
+# How to contribute
+
 ## Branches
 
 One branch per issue named with the following pattern:
@@ -10,7 +12,7 @@ ex: `feature/issue-12`, `hotfix/issue-13`
 
 ## Commit messages
 
-# What to do ?
+### What to do ?
 
 When you commit code changes please always add the related Github issue number in the comment. If it's a bug fix you will always have an issue. If not, please create one.
 
