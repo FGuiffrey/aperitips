@@ -8,9 +8,14 @@ Symfony 3 project to organise internal conferences.
 ## Requirement
 
 * php >= 7.1
+* okta account
 * yarn
 * sass
 * grunt-cli
+
+## Contributing
+
+Everybody is free to contribute to this project. However, before submit a pull request, please read our [guidelines](https://github.com/EmakinaFR/aperitips/blob/master/CONTRIBUTING.md) to ensure that your commit match our expectations.
 
 ## Installation
 
