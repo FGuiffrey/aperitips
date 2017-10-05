@@ -38,4 +38,4 @@ before_script:
 script:
   - vendor/bin/phpcs -s --config-set ignore_warnings_on_exit 1
   - vendor/bin/php-cs-fixer fix --diff --dry-run
-  - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+  - vendor/bin/phpunit --stderr --coverage-clover build/logs/clover.xml
