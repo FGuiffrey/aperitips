@@ -16,8 +16,14 @@ class IdEntry
      * @var string
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\GeneratedValue(
+     *     strategy="NONE"
+     * )
+     * @ORM\Column(
+     *     type="string",
+     *     length=255,
+     *     nullable=false
+     * )
      */
     private $entityId;
 
@@ -25,19 +31,31 @@ class IdEntry
      * @var string
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\GeneratedValue(
+     *     strategy="NONE"
+     * )
+     * @ORM\Column(
+     *     type="string",
+     *     length=255,
+     *     nullable=false
+     * )
      */
     private $id;
 
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(
+     *     name="expiry_timestamp",
+     *     type="integer",
+     *     nullable=false
+     * )
      */
     private $expiryTimestamp;
 
     /**
+     * Get entityId.
+     *
      * @return string
      */
     public function getEntityId(): string
@@ -46,11 +64,13 @@ class IdEntry
     }
 
     /**
+     * Set entityId.
+     *
      * @param string $entityId
      *
      * @return IdEntry
      */
-    public function setEntityId($entityId): IdEntry
+    public function setEntityId($entityId): self
     {
         $this->entityId = $entityId;
 
@@ -58,6 +78,8 @@ class IdEntry
     }
 
     /**
+     * Get id.
+     *
      * @return string
      */
     public function getId(): string
@@ -66,11 +88,13 @@ class IdEntry
     }
 
     /**
+     * Set id.
+     *
      * @param string $id
      *
      * @return IdEntry
      */
-    public function setId($id): IdEntry
+    public function setId($id): self
     {
         $this->id = $id;
 
@@ -78,6 +102,8 @@ class IdEntry
     }
 
     /**
+     * Get expiryTimestamp.
+     *
      * @return \DateTime
      */
     public function getExpiryTime(): DateTime
@@ -86,11 +112,13 @@ class IdEntry
     }
 
     /**
+     * Set expiryTime.
+     *
      * @param \DateTime $expiryTime
      *
      * @return IdEntry
      */
-    public function setExpiryTime(DateTime $expiryTime): IdEntry
+    public function setExpiryTime(DateTime $expiryTime): self
     {
         $this->expiryTimestamp = $expiryTime->getTimestamp();
 

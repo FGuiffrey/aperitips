@@ -18,7 +18,9 @@ class EventRepository extends EntityRepository
         $qb = $this->createQueryBuilder('event');
 
         return $qb
-            ->select('event')
+            ->select('event', 'subjects', 'speakers')
+            ->leftJoin('event.subjects', 'subjects')
+            ->leftJoin('subjects.speakers', 'speakers')
             ->where(
                 $qb->expr()->gte('event.scheduledAt', ':scheduleAt')
             )

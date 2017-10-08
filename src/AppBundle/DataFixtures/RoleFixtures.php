@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\DataFixtures\Auth;
+namespace AppBundle\DataFixtures;
 
 use AppBundle\Entity\Auth\Role;
 use Doctrine\Common\DataFixtures\FixtureInterface;
@@ -9,7 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 /**
  * Class LoadRoleData.
  */
-class LoadRoleData implements FixtureInterface
+class RoleFixtures implements FixtureInterface
 {
     private const ROLES = [
         'ROLE_USER'        => 'Simple User (Read only)',
