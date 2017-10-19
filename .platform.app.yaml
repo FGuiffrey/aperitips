@@ -19,7 +19,7 @@ hooks:
     build: |
         yarn install --prod
         grunt compress
-        #rm web/app_dev.php
+        rm web/app_dev.php
         bin/console --env=prod assets:install --no-debug
 
     deploy: |
@@ -50,7 +50,7 @@ web:
             # The public directory of the app, relative to its root.
             root: "web"
             # The front-controller script to send non-static requests to.
-            passthru: "/app_dev.php"
+            passthru: "/app.php"
 
 # The dependencies of the project
 dependencies:
