@@ -90,7 +90,7 @@ light_saml_symfony_bridge:
     party:
         idp:
             files:
-                - '%okta_domain/%app/%okta_idp%/sso/saml/metadata'
+                - '%okta_domain%/app/%okta_idp%/sso/saml/metadata'
 
     store:
         id_state: id_store
