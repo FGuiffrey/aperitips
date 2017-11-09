@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Event;
+use AppBundle\Entity\Subject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,9 +26,11 @@ class DefaultController extends Controller
         $em = $this->get('doctrine')->getManager();
 
         $event = $em->getRepository(Event::class)->findNextEvent();
+        $subjects = $em->getRepository(Subject::class)->findAllPending();
 
         return $this->render('default/index.html.twig', [
-            'event' => $event,
+            'event'    => $event,
+            'subjects' => $subjects,
         ]);
     }
 

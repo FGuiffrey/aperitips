@@ -5,7 +5,7 @@
 {% block push %}
     <div id="push" class="push">
         <div class="push-container">
-        <h2 class="primary">Apéritips</h2>
+            <h2 class="primary">Apéritips</h2>
 
             <p>{# Description/ Concept / ... #}</p>
 
@@ -19,65 +19,58 @@
         <article>
             <h2 class="primary">Actus</h2>
 
-            <p>Prochain Apéritips : <strong>{{ event.scheduledAt|localizeddate('long', 'none') }}</strong></p>
+            {% if event %}
+                <p>Prochain Apéritips : <strong>{{ event.scheduledAt|localizeddate('long', 'none') }}</strong></p>
 
-            <h3>Sujet</h3>
+                <h3>Sujets</h3>
 
-            <section class="articles">
-                <article class="article">
-                    <h4>
-                        {# Titre #}
-                    </h4>
-                    <p>{# Description #}</p>
-                    <span>{# Speaker(s) #}</span>
-                </article>
-            </section>
+                <section class="articles">
+                    {% for subject in event.subjects %}
+                        <article class="article">
+                            <h4>{{ subject.name|truncate(25) }}</h4>
+                            <p>{{ subject.content|truncate(100) }}</p>
+                            {% for speaker in subject.speakers %}
+                                <span>{{ speaker.email }}</span>
+                            {% endfor %}
+                        </article>
+                    {% endfor %}
+                </section>
 
-            {{ flash('success') }}
+                {{ flash('success') }}
 
-            {% if not event.isRegistered(app.user) %}
-                <form action="{{ path('event_register', { 'id': event.id }) }}" method="post">
-                    <input type="hidden" name="_token" value="{{ csrf_token('event_registration') }}">
-                    <button type="submit">{{ 'form.event.register_submit'|trans({}, 'form') }}</button>
-                </form>
+                {% if not event.isRegistered(app.user) %}
+                    <form action="{{ path('event_register', { 'id': event.id }) }}" method="post">
+                        <input type="hidden" name="_token" value="{{ csrf_token('event_registration') }}">
+                        <button type="submit">{{ 'form.event.register_submit'|trans({}, 'form') }}</button>
+                    </form>
+                {% endif %}
             {% endif %}
 
         </article>
     </section>
 
-    <section class="next-subject" id='prochains-sujets'>
+    <section class="next-subject" id="prochains-sujets">
         <article>
             <h2 class="primary">Prochains sujets</h2>
 
             <section class="articles">
-                <article class="article">
-                    <em>{# Vote #}</em>
-                    <h4>
-                        {# Titre #}
-                    </h4>
-                    <p>{# Description #}</p>
-                    <span>{# Speaker(s) #}</span>
-                </article>
+                {% for subject in subjects %}
+                    <article class="article">
+                        <em>{{ subject.voteCount }}</em>
+                        <h4>
+                            {{ subject.name|truncate(50) }}
+                        </h4>
+                        <p>{{ subject.content|truncate(100) }}</p>
+                        {% for speaker in subject.speakers %}
+                            <span>{{ speaker.email }}</span>
+                        {% endfor %}
+                    </article>
+                {% endfor %}
             </section>
-
-            <h3>Proposer un sujet </h3>
-
-            <form method="post" action="#">
-                <label for="speaker">speaker(s)</label>
-                <input type="text" name="speaker" id="speaker"/>
-                <label for="email">email(s)</label>
-                <input type="text" name="email" id="email"/>
-                <label for="sujet">Sujet</label>
-                <input type="text" name="sujet" id="sujet"/>
-                <label for="resume">Résumé</label>
-                <textarea name="resume" id="resume"></textarea>
-                <input type="submit" name="envoyer" value="Faire une proposition"/>
-            </form>
-
         </article>
     </section>
 
-    <section id='participants'>
+    <section id="participants">
         <article>
             <h2 class="primary">Participant</h2>
 
@@ -95,7 +88,7 @@
         </article>
     </section>
 
-    <section id='archive'>
+    <section id="archive">
         <article>
             <h2 class="primary">Archive</h2>
 

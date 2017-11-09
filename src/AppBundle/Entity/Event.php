@@ -10,8 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Event.
  *
- * @ORM\Table(name="events")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\EventRepository")
+ * @ORM\Table(
+ *     name="events"
+ * )
+ * @ORM\Entity(
+ *     repositoryClass="AppBundle\Repository\EventRepository"
+ * )
  * @ORM\HasLifecycleCallbacks()
  */
 class Event
@@ -19,53 +23,92 @@ class Event
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(
+     *     strategy="AUTO"
+     * )
+     * @ORM\Column(
+     *     name="id",
+     *     type="integer"
+     * )
      */
     private $id;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="registered_count", type="integer", options={"default" : 0})
+     * @ORM\Column(
+     *     name="registered_count",
+     *     type="integer",
+     *     options={"default": 0}
+     * )
      */
     private $registeredCount = 0;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="scheduled_at", type="datetime")
+     * @ORM\Column(
+     *     name="scheduled_at",
+     *     type="datetime"
+     * )
      */
     private $scheduledAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(
+     *     name="created_at",
+     *     type="datetime"
+     * )
      */
     private $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @ORM\Column(
+     *     name="updated_at",
+     *     type="datetime"
+     * )
      */
     private $updatedAt;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Auth\User", inversedBy="attendedEvents")
-     * @ORM\JoinTable(name="event_registered")
+     * @ORM\ManyToMany(
+     *     targetEntity="AppBundle\Entity\Auth\User",
+     *     inversedBy="attendedEvents"
+     * )
+     * @ORM\JoinTable(
+     *     name="event_registered"
+     * )
      */
     private $registered;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="AppBundle\Entity\Subject",
+     *     mappedBy="event"
+     * )
+     */
+    private $subjects;
+
+    /**
      * @var \AppBundle\Entity\Auth\User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Auth\User", inversedBy="createdEvents")
-     * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
+     * @ORM\ManyToOne(
+     *     targetEntity="AppBundle\Entity\Auth\User",
+     *     inversedBy="createdEvents"
+     * )
+     * @ORM\JoinColumn(
+     *     name="author_id",
+     *     referencedColumnName="id"
+     * )
      */
     private $author;
 
@@ -104,7 +147,7 @@ class Event
      *
      * @return Event
      */
-    public function setScheduledAt(\DateTime $scheduledAt): Event
+    public function setScheduledAt(\DateTime $scheduledAt): self
     {
         $this->scheduledAt = $scheduledAt;
 
@@ -173,13 +216,23 @@ class Event
     }
 
     /**
+     * Get subjects.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSubjects(): Collection
+    {
+        return $this->subjects;
+    }
+
+    /**
      * Set author.
      *
      * @param \AppBundle\Entity\Auth\User $author
      *
      * @return \AppBundle\Entity\Event
      */
-    public function setAuthor(User $author): Event
+    public function setAuthor(User $author): self
     {
         $this->author = $author;
 
@@ -215,7 +268,7 @@ class Event
      *
      * @return \AppBundle\Entity\Event
      */
-    public function addRegistered(User $user): Event
+    public function addRegistered(User $user): self
     {
         if (!$this->isRegistered($user)) {
             $this->registered->add($user);

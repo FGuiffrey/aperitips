@@ -1,4 +1,6 @@
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.1-8892BF.svg?style=flat-square)](https://php.net)
+|Travis|PHP|
+|:------:|:-------:|
+|[![Build](https://img.shields.io/travis/EmakinaFR/aperitips.svg?style=flat-square)](https://travis-ci.org/EmakinaFR/aperitips)|[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.1-8892BF.svg?style=flat-square)](https://php.net)|
 
 EmakinaFR Aperitips
 ==========
@@ -35,7 +37,7 @@ cd www && git clone git@github.com:EmakinaFR/aperitips.git
 * Install all dependencies with composer `composer install`
 * Create a new database and update the `parameters.yml` with the correct credentials
 * Run the migrations `php bin/console doctrine:migrations:migrate`
-* Load fixtures `php bin/console doctrine:fixtures:load --fixtures=src/AppBundle/DataFixtures/Auth/ --append`
+* Load fixtures `php bin/console doctrine:fixtures:load --fixtures=src/AppBundle/DataFixtures --append`
 * Start the PHP web server by running `php bin/console server:start`
 * Go to **http://127.0.0.1:8000** to see the project
 

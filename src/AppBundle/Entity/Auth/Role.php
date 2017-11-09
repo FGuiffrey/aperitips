@@ -3,38 +3,59 @@
 namespace AppBundle\Entity\Auth;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\Role\Role as BaseRole;
 
 /**
  * Class Role.
  *
- * @ORM\Entity
+ * @ORM\Table(
+ *     name="roles"
+ * )
+ * @ORM\Entity(
+ *     repositoryClass="AppBundle\Repository\Auth\RoleRepository"
+ * )
  * @ORM\HasLifecycleCallbacks
- * @ORM\Table(name="roles")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Auth\RoleRepository")
  */
 class Role extends BaseRole
 {
     /**
      * @ORM\Id
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(
+     *     strategy="AUTO"
+     * )
+     * @ORM\Column(
+     *     name="id",
+     *     type="integer"
+     * )
      */
     private $id;
 
     /**
-     * @ORM\Column(name="name", type="string", length=60)
+     * @ORM\Column(
+     *     name="name",
+     *     type="string",
+     *     length=60
+     * )
      */
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="roles")
+     * @ORM\ManyToMany(
+     *     targetEntity="User",
+     *     mappedBy="roles"
+     * )
      */
     private $users;
 
     /**
-     * @ORM\Column(name="role", type="string", length=60, unique=true)
+     * @ORM\Column(
+     *     name="role",
+     *     type="string",
+     *     length=60,
+     *     unique=true
+     * )
      */
     private $role;
 
@@ -68,7 +89,7 @@ class Role extends BaseRole
      *
      * @return \AppBundle\Entity\Auth\Role
      */
-    public function setName(string $name): Role
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -88,14 +109,16 @@ class Role extends BaseRole
     /**
      * Get users.
      *
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getUsers(): ArrayCollection
+    public function getUsers(): Collection
     {
         return $this->users;
     }
 
     /**
+     * Get role.
+     *
      * @return string
      */
     public function getRole(): string
@@ -110,10 +133,10 @@ class Role extends BaseRole
      *
      * @return Role
      */
-    public function addUser(User $user): Role
+    public function addUser(User $user): self
     {
         if (!$this->users->contains($user)) {
-            $this->users[] = $user;
+            $this->users->add($user);
             $user->addRole($this);
         }
 
