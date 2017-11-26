@@ -7,7 +7,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
- * Class LoadRoleData.
+ * Class RoleFixtures.
  */
 class RoleFixtures implements FixtureInterface
 {

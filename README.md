@@ -36,7 +36,7 @@ cd www && git clone git@github.com:EmakinaFR/aperitips.git
 
 * Install all dependencies with composer `composer install`
 * Create a new database and update the `parameters.yml` with the correct credentials
-* Run the migrations `php bin/console doctrine:migrations:migrate`
+* Update the database `php bin/console doctrine:schema:update --force`
 * Load fixtures `php bin/console doctrine:fixtures:load --fixtures=src/AppBundle/DataFixtures --append`
 * Start the PHP web server by running `php bin/console server:start`
 * Go to **http://127.0.0.1:8000** to see the project

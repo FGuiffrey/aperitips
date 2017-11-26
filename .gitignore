@@ -24,3 +24,4 @@
 /web/uploads/
 .php_cs.cache
 .idea
+.web-server-pid

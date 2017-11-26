@@ -4,11 +4,12 @@ namespace AppBundle\DataFixtures;
 
 use AppBundle\Entity\Auth\Role;
 use AppBundle\Entity\Auth\User;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 
-class UserFixtures implements FixtureInterface
+class UserFixtures implements FixtureInterface, DependentFixtureInterface
 {
     /**
      * Load data fixtures with the passed EntityManager.

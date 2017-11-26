@@ -5,11 +5,12 @@ namespace AppBundle\DataFixtures;
 use AppBundle\Entity\Auth\User;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Subject;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 
-class SubjectFixtures implements FixtureInterface
+class SubjectFixtures implements FixtureInterface, DependentFixtureInterface
 {
     /**
      * Load data fixtures with the passed EntityManager.
@@ -29,6 +30,7 @@ class SubjectFixtures implements FixtureInterface
 
             $subject = new Subject();
             $subject->setName($faker->text(100));
+            $subject->setSlug($faker->slug(10));
             $subject->setContent($faker->text(1000));
             $subject->setStatus(Subject::STATUS_ACCEPTED);
             $subject->setEvent($events[$event]);
@@ -52,6 +54,7 @@ class SubjectFixtures implements FixtureInterface
         for ($i = 0; $i < 10; ++$i) {
             $subject = new Subject();
             $subject->setName($faker->text(100));
+            $subject->setSlug($faker->slug(10));
             $subject->setContent($faker->text(1000));
             $subject->setStatus(Subject::STATUS_PENDING);
 
@@ -74,6 +77,7 @@ class SubjectFixtures implements FixtureInterface
         for ($i = 0; $i < 10; ++$i) {
             $subject = new Subject();
             $subject->setName($faker->text(100));
+            $subject->setSlug($faker->slug(10));
             $subject->setContent($faker->text(1000));
             $subject->setStatus(Subject::STATUS_REJECTED);
             $subject->setReason($faker->text(100));
