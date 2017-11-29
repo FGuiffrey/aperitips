@@ -1,3 +1,12 @@
+//=== CONTENT ===========================================
+//
+// _VARS
+// _MIXINS
+//
+//=======================================================
+
+
+
 //
 // Variables
 // --------------------------------------------------
@@ -15,3 +24,44 @@ $gutter-l: 60px
 $max-layout: 992px
 
 $font-path: '../fonts/museosans-300-webfont'
+
+
+
+//
+// Mixins
+// --------------------------------------------------
+
+
+//Media Queries
+
+@mixin breakpoint($point)
+
+  @if $point == medium-desktop
+    @media only screen and (max-width: 1280px)
+      @content
+
+  @else if $point == large-desktop
+    @media only screen and (min-width: 1520px)
+      @content
+
+
+  @else if $point == desktop
+    @media only screen and (min-width: 1025px)
+      @content
+
+  @else if $point == tablet-h
+    @media (max-width: 1024px)
+      @content
+
+  @else if $point == tablet-v
+    @media (max-width: 768px)
+      @content
+
+  @else if $point == mobile
+    @media (max-width: 480px)
+      @content
+
+
+  @else if $point == small-mobile
+    @media (max-width: 320px)
+      @content

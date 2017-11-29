@@ -1,17 +1,28 @@
-// Reset
-@import "reset"
+//=== CONTENT ===========================================
+//
+// _FONTS
+// _BASE
+// _MAIN
+// _USER
+//
+//=======================================================
 
-// Variables
-@import "variables"
 
-// Font
+//
+// Fonts
+// --------------------------------------------------
+
 @font-face
   font-weight: normal
   font-style: normal
   font-family: 'museo_sans'
   src: url('#{$font-path}.eot'), url('#{$font-path}.eot?#iefix') format('embedded-opentype'), url('#{$font-path}.woff2') format('woff2'), url('#{$font-path}.woff') format('woff'), url('#{$font-path}.ttf') format('truetype'), url('#{$font-path}.svg#museo_sans300') format('svg')
 
-// General
+
+//
+// Base
+// --------------------------------------------------
+
 html
   font-size: 62.5%
 
@@ -40,6 +51,13 @@ p
 strong
   color: $color--primary
 
+
+
+//
+// Main
+// --------------------------------------------------
+
+
 // header
 header
   background: $color--black-opacity
@@ -47,8 +65,41 @@ header
   font-size: 1em
   z-index: 4
   width: 100%
-  margin-top: -73px
+  //margin-top: -73px
   transition: background 350ms ease
+
+  #burger-btn
+    display: none
+
+    @include breakpoint(tablet-h)
+      position: fixed
+      z-index: 400
+      display: flex
+      flex-direction: column
+      justify-content: space-between
+      align-items: flex-end
+      width: 45px
+      height: 40px
+      top: 30px
+      right: 30px
+
+      @include breakpoint(mobile)
+        width: 35px
+        height: 30px
+        top: 22px
+        right: 22px
+
+      .line
+        width: 100%
+        height: 4px
+        background-color: $color--white
+        transition: width 350ms cubic-bezier(.63,.18,.45,1)
+
+    &.triggered
+      .line:nth-child(2)
+        width: 50%
+
+
 
   &.sticky
     position: fixed
@@ -57,6 +108,7 @@ header
     margin: 0
 
   .header-container
+    position: relative
     width: 96%
     padding: 0
     margin-right: auto
@@ -66,6 +118,13 @@ header
 
   .logo
     padding: 28px 21px 0
+
+    @include breakpoint(tablet-h)
+      padding: 35px 0 28px 0
+      margin: 0 auto
+
+    @include breakpoint(mobile)
+      padding: 25px 0 15px 0
 
     img
       width: 156px
@@ -77,7 +136,8 @@ header
       li
         transition: all 350ms ease
 
-        a
+        a, .username
+          cursor: pointer
           padding: 31px 20px 23px
           display: block
           background: transparent
@@ -98,6 +158,77 @@ header
           &.active
             background: $color--primary
 
+        &.dropdown
+          .dropdown-content
+            background: $color--primary
+            display: none
+            position: absolute
+            bottom: -79px
+            right: 0
+            //transition: all 350ms ease
+
+          &:hover .dropdown-content
+            display: flex
+
+          .dropdown-content li
+            border-bottom: 4px solid $color--primary
+            &:hover
+              border-bottom: 4px solid $color--white
+
+    @include breakpoint(tablet-h)
+      background-color: $color--black-background
+      height: 100vh
+      width: 100vw
+      position: fixed
+      top: 0
+      left: 0
+      z-index: 300
+      left: -100vw
+      transition: left 350ms cubic-bezier(.63,.18,.45,1)
+
+      >ul
+        position: absolute
+        flex-direction: column
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+
+        li.primary
+          font-size: 1.5em
+          border-left: 4px solid $color--primary
+          margin-bottom: 50px
+
+          @include breakpoint(mobile)
+            font-size: 1.2em
+            margin-bottom: 30px
+
+            a
+              padding-top: 10px
+              padding-bottom: 10px
+
+          &:last-child
+            margin-bottom: 0
+
+          &.dropdown
+            .dropdown-content
+              background-color: transparent
+              display: block
+              position: relative
+              bottom: 0
+
+              ul
+                display: flex
+                flex-direction: row
+
+                li
+                  font-size: .8em
+
+                  @include breakpoint(mobile)
+                    font-size: .7em
+
+      &.open
+        left: 0
+
 article,
 .push-container
   max-width: $max-layout
@@ -113,9 +244,20 @@ article,
     position: relative
     top: 50%
     transform: translateY(-50%)
+    @include breakpoint(tablet-v)
+      height: 100vh
 
     h2
       padding-top: 40px
+
+      @include breakpoint(tablet-v)
+        position: absolute
+        top: 60%
+        font-size: 4em
+
+      @include breakpoint(mobile)
+        top: 50%
+        font-size: 3em
 
       &:before
         top: 0
@@ -127,16 +269,33 @@ article,
     top: 50%
     right: 0
     transform: translateY(-50%)
+    @include breakpoint(tablet-v)
+      width: 40%
+      left: 50%
+      top: 100px
+      transform: translateX(-50%)
+
+    @include breakpoint(mobile)
+      width: 80%
+      top: 50px
+
 
   p
     text-shadow: 0 0 2px $color--black
     max-width: 40%
     background: $color--black-opacity
     padding: 10px
-    font-size: 1.1em
+    font-size: 1.5em
 
+    @include breakpoint(tablet-v)
+      position: absolute
+      top: 80%
+      min-width: 100%
 
-// Main
+    @include breakpoint(mobile)
+      top: 70%
+      font-size: 1.2em
+
 
 main
   > section
@@ -144,19 +303,34 @@ main
     margin-bottom: $gutter-l*2
     padding: $gutter-l*2 $gutter-l $gutter-l
 
+    @include breakpoint(mobile)
+      padding: $gutter-l 30px
+
   &:last-child
     margin-bottom: 0
 
+
+  #actus
+    article
+      .next-aperitips
+        font-size: 1.4em
+
 h2
-  font-size: 4em
+  font-size: 3.5em
   padding: $gutter-l*2 0 $gutter-l/2
   text-transform: uppercase
   position: relative
 
+  @include breakpoint(tablet-v)
+    font-size: 3em
+
+  @include breakpoint(mobile)
+    font-size: 2.5em
+
   &:before
     content: ' '
     width: $gutter-l
-    height: 2px
+    height: 3px
     display: block
     position: absolute
     top: 80px
@@ -175,10 +349,22 @@ h3
   padding: $gutter-l 0 $gutter-l/4
   text-transform: uppercase
 
+  @include breakpoint(tablet-v)
+    font-size: 2em
+
+  @include breakpoint(mobile)
+    font-size: 1.5em
+
 h4
   font-size: 1.4em
   padding: $gutter-l/2 0 $gutter-l/4
   position: relative
+
+  @include breakpoint(tablet-v)
+    font-size: 1.3em
+
+  @include breakpoint(mobile)
+    font-size: 1.2em
 
   &:before
     content: ' '
@@ -201,6 +387,13 @@ h4
     width: 30%
     margin: 1.5%
     padding: $gutter-l/2
+
+    @include breakpoint(tablet-h)
+      width: 46.9%
+      margin-bottom: 20px
+
+    @include breakpoint(tablet-v)
+      width: 100%
 
     em
       color: $color--primary
@@ -247,11 +440,16 @@ form
   button,
   input
     &[type='submit']
+      cursor: pointer
       text-transform: uppercase
       width: auto
-      margin: 0 auto
+      margin: 50px auto 0 auto
       padding: $gutter-l/6 $gutter-l/4
       background: $color--primary
+      border-radius: 3px
+      transition: background-color 350ms ease
+      &:hover
+        background-color: darken($color--primary, 10%)
 
 .speakers
   display: flex
@@ -264,10 +462,22 @@ form
     margin: 1.5%
     text-align: center
 
+    @include breakpoint(tablet-v)
+      width: 46.8%
+      margin-bottom: 30px
+
+    @include breakpoint(mobile)
+      width: 100%
+
     .content-speaker
       background: $color--black-background
       padding-top: $gutter-l
+      padding-bottom: 10px
       margin-top: -$gutter-l
+
+      .pres
+        margin-top: 10px
+        color: $color--primary
 
     img
       border-radius: 50%
@@ -302,9 +512,9 @@ form
       &:after
         content: '>'
 
-// vote
+// Vote
 
-.next-subject
+.next-subjects
   .article
     position: relative
 
@@ -320,6 +530,7 @@ form
       padding: 5px $gutter-l/4
       opacity: 0
       transition: all 350ms ease
+      border-radius: 3px
 
     &:before
       content: ' '
@@ -349,6 +560,14 @@ footer
   padding: 20px
   text-align: center
   font-size: .8em
+  display: flex
+  justify-content: center
+
+  svg
+    height: 15px
+    display: block
+    padding-left: 15px
+
 
 
 // Logo animation
@@ -429,4 +648,67 @@ footer
 
   100%
     opacity:  0.3
+
+
+
+//
+// User
+// --------------------------------------------------
+
+.user-profile
+
+  .infos-container
+    display: flex
+    justify-content: space-between
+    height: 400px
+
+    @include breakpoint(tablet-v)
+      flex-direction: column
+      align-items: center
+      height: auto
+
+    .side
+      position: relative
+      height: 100%
+      width: 50%
+
+      @include breakpoint(tablet-v)
+        width: 80%
+
+      @include breakpoint(mobile)
+        width: 100%
+
+      &.side--left
+        @include breakpoint(tablet-v)
+          height: 300px
+
+        @include breakpoint(mobile)
+          height: 250px
+
+        .user-img-profile
+          width: 300px
+          border-radius: 50%
+          border: 3px solid $color--primary
+          position: absolute
+          top: 50%
+          left: 50%
+          transform: translate(-50%, -50%)
+          @include breakpoint(tablet-v)
+            width: 250px
+
+          @include breakpoint(mobile)
+            width: 200px
+
+      &.side--right
+        @include breakpoint(tablet-v)
+          height: auto
+        h2
+          @include breakpoint(tablet-h)
+            font-size: 2.5em
+
+          @include breakpoint(mobile)
+            font-size: 2em
+
+        .subtitle
+          font-size: 1.5em
 

@@ -7,7 +7,7 @@
         <div class="push-container">
             <h2 class="primary">Apéritips</h2>
 
-            <p>{# Description/ Concept / ... #}</p>
+            <p>Proposez votre sujet et votez pour le prochain !{# Description/ Concept / ... #}</p>
 
             {{ logo() }}
         </div>
@@ -20,7 +20,7 @@
             <h2 class="primary">Actus</h2>
 
             {% if event %}
-                <p>Prochain Apéritips : <strong>{{ event.scheduledAt|localizeddate('long', 'none') }}</strong></p>
+                <p class="next-aperitips">Prochain Apéritips : <strong>{{ event.scheduledAt|localizeddate('long', 'none') }}</strong></p>
 
                 <h3>Sujets</h3>
 
@@ -36,6 +36,8 @@
                     {% endfor %}
                 </section>
 
+
+
                 {{ flash('success') }}
 
                 {% if not event.isRegistered(app.user) %}
@@ -49,7 +51,7 @@
         </article>
     </section>
 
-    <section class="next-subject" id="prochains-sujets">
+    <section class="next-subjects" id="prochains-sujets">
         <article>
             <h2 class="primary">Prochains sujets</h2>
 
@@ -72,27 +74,29 @@
 
     <section id="participants">
         <article>
-            <h2 class="primary">Participant</h2>
+            <h2 class="primary">Participants</h2>
 
-            <ul class="speakers">
-                <li class="speaker">
-                    <img src="{{ asset('assets/images/default.svg') }}" alt="agl">
-                    <div class="content-speaker">
-                        <span class="name">{# Speaker #}</span>
-                        <em class="email">{# Email du Speaker #}</em>
-                        <span class="pres">{# Nombre #} Présentation(s)</span>
-                    </div>
-                </li>
-            </ul>
+            {#<ul class="speakers">#}
+                {#{% for user in users %}#}
+                {#<li class="speaker">#}
+                    {#<img src="{{ asset('assets/images/default.svg') }}" alt="agl">#}
+                    {#<div class="content-speaker">#}
+                        {#<span class="name">#}{# Speaker #}{#</span>#}
+                        {#<em class="email">#}{# Email du Speaker #}{#</em>#}
+                        {#<span class="pres">#}{# Nombre #}{# Présentation(s)</span>#}
+                    {#</div>#}
+                {#</li>#}
+                {#{% endfor %}#}
+            {#</ul>#}
 
         </article>
     </section>
 
-    <section id="archive">
+    <section id="archives">
         <article>
-            <h2 class="primary">Archive</h2>
+            <h2 class="primary">Archives</h2>
 
-            <h3>Ancien Sujet</h3>
+            <h3>Anciens Sujets</h3>
 
             <section class="articles">
                 <article class="article">

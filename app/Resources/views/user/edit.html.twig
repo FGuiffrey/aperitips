@@ -4,13 +4,22 @@
 
 {% block title %}Profil de {{ user.username }}{% endblock %}
 
+
 {% block mainContent %}
-    <section>
-        <h2 class="primary">Modifier mes informations</h2>
-        <img src="{{ vich_uploader_asset(user, 'pictureFile') }}" alt="">
+    <section class="user-profile user-profile-edit-infos">
         {{ flash() }}
-        {{ form_start(form) }}
-            {{ form_widget(form) }}
-        {{ form_end(form) }}
+        <h2 class="primary">Modifier mes informations</h2>
+
+        <div class="infos-container">
+            <div class="side side--left">
+                <img src="{{ vich_uploader_asset(user, 'pictureFile') }}" alt="User Profile Image" class="user-img-profile">
+            </div>
+
+            <div class="side side--right">
+                {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
     </section>
 {% endblock %}

@@ -65,7 +65,7 @@ class UserController extends Controller
 
                 $this->addFlash('success', $this->get('translator')->trans('form.user.edit_success', [], 'form'));
 
-                return $this->redirectToRoute('user_account_settings');
+                return $this->redirectToRoute('user_settings');
             }
 
             $this->addFlash('error', $this->get('translator')->trans('form.user.edit_error', [], 'form'));

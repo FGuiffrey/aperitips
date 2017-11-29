@@ -1,53 +1,80 @@
-var app = {};
+$(document).ready(function () {
 
-var onScroll = function(){
-    var scrollPos = jQuery(document).scrollTop();
-    app.anchor.nav.each(function () {
-        var currLink = jQuery(this);
-        var refElement = jQuery(currLink.attr('href'));
-        if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
-            app.anchor.nav.removeClass(app.anchor.class);
-            currLink.addClass(app.anchor.class);
-        }
-        else{
-            currLink.removeClass(app.anchor.class);
-        }
-    });
+    const app = {
+        sticky : {
+            element: $('.js_header'),
+            class: 'sticky',
+            height: $('#push').height() + 76,
+            burgerBtn : $('.js_burger_btn')
+        },
+        anchor : {
+            element: $('.js_link'),
+            class : 'active',
+            findNav: $('#js_nav').find('')
+        },
+        nav : $('#js_nav')
+    };
 
-    if( jQuery(this).scrollTop() > app.sticky.height ) {
-        app.sticky.addClass(app.sticky.class);
-    } else {
-        app.sticky.removeClass(app.sticky.class);
+
+    const onScroll = function(){
+        let scrollPos = $(document).scrollTop();
+        app.anchor.findNav.each(function () {
+            let currLink = $(this);
+            let refElement = $(currLink).attr('href');
+            refElement = refElement.substring(refElement.indexOf('#'));
+            if ($(refElement).position().top <= scrollPos && $(refElement).position().offsetTop + $(refElement).height() > scrollPos) {
+                app.anchor.findNav.removeClass(app.anchor.class);
+                currLink.addClass(app.anchor.class);
+            }
+            else{
+                currLink.removeClass(app.anchor.class);
+            }
+        });
+
+        if( $(this).scrollTop() > app.sticky.height ) {
+            app.sticky.element.addClass(app.sticky.class);
+        } else {
+            app.sticky.element.removeClass(app.sticky.class);
+        }
+    };
+
+
+    $(document).on('scroll', onScroll);
+
+    //check if we're on the homepage
+    if($('.push-container').length > 0) {
+
+        app.anchor.element.on('click', function (e) {
+            e.preventDefault();
+            $(document).off('scroll');
+
+            $('.js_link').each(function () {
+                $(this).removeClass(app.anchor.class);
+            });
+            $(this).addClass(app.anchor.class);
+
+            let target = this.hash;
+            let targetElement = $(target);
+            $('html, body').stop().animate({
+                'scrollTop': targetElement.offset().top + 2
+            }, 500, 'swing', function () {
+                window.location.hash = target;
+                $(document).on('scroll', onScroll);
+            });
+        });
+
     }
-};
 
-jQuery(document).ready(function () {
-    app.sticky = jQuery('header');
-    app.sticky.class = 'sticky';
-    app.sticky.height = jQuery('#push').height() + 50;
+    //MOBILE NAV
 
-    app.anchor = jQuery('a[href^="#"]');
-    app.anchor.class = 'active';
-    app.anchor.nav = jQuery('#nav').find('a');
-
-    jQuery(document).on('scroll', onScroll);
-
-    app.anchor.on('click', function (e) {
-        e.preventDefault();
-        jQuery(document).off('scroll');
-
-        jQuery('a').each(function () {
-            jQuery(this).removeClass(app.anchor.class);
-        });
-        jQuery(this).addClass(app.anchor.class);
-
-        var target = this.hash;
-        var targetElement = jQuery(target);
-        jQuery('html, body').stop().animate({
-            'scrollTop': targetElement.offset().top+2
-        }, 500, 'swing', function () {
-            window.location.hash = target;
-            jQuery(document).on('scroll', onScroll);
-        });
+    app.sticky.burgerBtn.on('click', function(){
+        app.nav.toggleClass('open');
+        app.sticky.burgerBtn.toggleClass('triggered');
     });
+
+    app.anchor.element.on('click', function(){
+        app.nav.toggleClass('open');
+        app.sticky.burgerBtn.toggleClass('triggered');
+    });
+
 });

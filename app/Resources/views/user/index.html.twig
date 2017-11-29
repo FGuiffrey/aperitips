@@ -3,10 +3,17 @@
 {% block title %}Profil de {{ user.username }}{% endblock %}
 
 {% block mainContent %}
-    <section>
-        <h1>{{ user.username }}</h1>
-        <img src="{{ vich_uploader_asset(user, 'pictureFile') }}" alt="">
-        {{ user.firstname }}
-        {{ user.lastname }}
+    <section class="user-profile user-profile-view-infos">
+
+        <div class="infos-container">
+            <div class="side side--left">
+                <img src="{{ vich_uploader_asset(user, 'pictureFile') }}" alt="User Profile Image" class="user-img-profile">
+            </div>
+
+            <div class="side side--right">
+                <h2 class="primary">{{ user.firstname }} {{ user.lastname }}</h2>
+                <p class="subtitle">{{ user.username }}</p>
+            </div>
+        </div>
     </section>
 {% endblock %}
